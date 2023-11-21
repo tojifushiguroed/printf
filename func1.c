@@ -6,7 +6,7 @@
 /*   By: egolboyu <egolboyu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:32:20 by egolboyu          #+#    #+#             */
-/*   Updated: 2023/11/21 15:53:54 by egolboyu         ###   ########.fr       */
+/*   Updated: 2023/11/21 21:00:52 by egolboyu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_putnbr(int n)
 	c = '0' + n % 10 * sign;
 	ft_putchar(c);
 	return (c);
+	//efe buraydaydı
 }
 
 size_t	ft_strlen(const char *str)
