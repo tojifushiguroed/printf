@@ -6,27 +6,27 @@
 #    By: egolboyu <egolboyu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 15:34:57 by egolboyu          #+#    #+#              #
-#    Updated: 2023/11/21 20:53:02 by egolboyu         ###   ########.fr        #
+#    Updated: 2023/12/09 23:21:33 by egolboyu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME	= libftprintf.a
+SRCS=    ft_printf.c func1.c func2.c 
 
-SRCS = ft_printf.h func1.c func2.c ft_printf.c
+OBJS	= ${SRCS:%.c=%.o}
 
-OBJS = $(SRCS:.c=.o)
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+FLAGS	= -Wall -Wextra -Werror
+
+$(NAME):
+	gcc $(FLAGS) -c $(SRCS) -I ./
+	ar rc $(NAME) $(OBJS)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar -rc $(NAME) $(OBJS)
-
 clean:
-	$(RM) $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all

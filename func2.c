@@ -6,56 +6,55 @@
 /*   By: egolboyu <egolboyu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:32:24 by egolboyu          #+#    #+#             */
-/*   Updated: 2023/11/21 15:32:25 by egolboyu         ###   ########.fr       */
+/*   Updated: 2023/12/09 22:44:34 by egolboyu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_u(unsigned int u)
+void	ft_putnbr_base(unsigned int nbr, char Xx, int *len)
 {
-	int	i;
+	unsigned int	base_len;
+	char			*base;
 
-	i = 0;
-	if (u >= 0 && u <= 9)
-		i += ft_putchar(u + '0');
+	base_len = 16;
+	if (Xx == 'x')
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	if (nbr < base_len)
+		ft_putchar(base[nbr % base_len], len);
 	else
 	{
-		i += ft_u(u / 10);
-		i += ft_u(u % 10);
+		ft_putnbr_base(nbr / base_len, Xx, len);
+		ft_putnbr_base(nbr % base_len, Xx, len);
 	}
-	return (i);
 }
 
-int	ft_pointer(unsigned long p)
+void	ft_putaddr_hex(unsigned long int nbr, char Xx, int *len)
 {
-	int	i;
+	unsigned long int	base_len;
+	char				*base;
 
-	i = 0;
-	if (p >= 16)
-		i += ft_pointer(p / 16);
-	if ((p % 16) < 10)
-		i += ft_putchar((p % 16) + '0');
+	base_len = 16;
+	if (Xx == 'x')
+		base = "0123456789abcdef";
 	else
-		i += ft_putchar((p % 16) - 10 + 'a');
-	return (i);
-}
-
-int	ft_hex(unsigned int x, int b)
-{
-	int	i;
-
-	i = 0;
-	if (x >= 16)
-		i += ft_hex(x / 16, b);
-	if ((x % 16) < 10)
-		i += ft_putchar((x % 16) + '0');
+		base = "0123456789ABCDEF";
+	if (nbr < base_len)
+		ft_putchar(base[nbr % base_len], len);
 	else
 	{
-		if (b == 0)
-			i += ft_putchar((x % 16) - 10 + 'a');
-		else
-			i += ft_putchar((x % 16) - 10 + 'A');
+		ft_putaddr_hex(nbr / base_len, Xx, len);
+		ft_putaddr_hex(nbr % base_len, Xx, len);
 	}
-	return (i);
+}
+
+void	ft_putaddr(void *addr, int *len)
+{
+	unsigned long int	ptr;
+
+	ptr = (unsigned long int)addr;
+	ft_putstr("0x", len);
+	ft_putaddr_hex(ptr, 'x', len);
 }

@@ -6,54 +6,55 @@
 /*   By: egolboyu <egolboyu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:32:20 by egolboyu          #+#    #+#             */
-/*   Updated: 2023/11/21 21:00:52 by egolboyu         ###   ########.fr       */
+/*   Updated: 2023/12/09 23:21:57 by egolboyu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putchar(char c)
+void	ft_putchar(char c, int *len)
 {
 	write(1, &c, 1);
-	return (1);
+	(*len)++;
 }
 
-int	ft_putstr(const char *s)
+void	ft_putstr(char *s, int *len)
 {
-	int		i;
-
-	i = 0;
-	if (s)
-		while (s[i])
-			write(1, &s[i++], 1);
-	return (i);
+	if (s == NULL)
+		ft_putstr("(null)", len);
+	while (s && *s)
+	{
+		ft_putchar(*s, len);
+		s++;
+	}
 }
 
-int	ft_putnbr(int n)
+void	ft_putnbr(int n, int *len)
 {
-	int		sign;
-	char	c;
+	unsigned int	nb;
 
-	sign = 1;
+	nb = n;
 	if (n < 0)
 	{
-		ft_putchar('-');
-		sign = -1;
+		ft_putchar('-', len);
+		nb *= -1;
 	}
-	if (n / 10)
-		ft_putnbr(n / 10 * sign);
-	c = '0' + n % 10 * sign;
-	ft_putchar(c);
-	return (c);
-	//efe buraydaydı
+	if (nb < 10)
+		ft_putchar(nb + '0', len);
+	else
+	{
+		ft_putnbr(nb / 10, len);
+		ft_putnbr(nb % 10, len);
+	}
 }
 
-size_t	ft_strlen(const char *str)
+void	ft_putnbr_u(unsigned int n, int *len)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	if (n < 10)
+		ft_putchar(n + '0', len);
+	else
+	{
+		ft_putnbr(n / 10, len);
+		ft_putnbr(n % 10, len);
+	}
 }
